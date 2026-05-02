@@ -1,4 +1,5 @@
 from django.db import models
+from common import BaseModel
 
 
 class Language(models.TextChoices):
@@ -6,7 +7,7 @@ class Language(models.TextChoices):
     SWEDISH = 'sv', 'Swedish'
 
 
-class Translation(models.Model):
+class Translation(BaseModel):
     key = models.CharField(max_length=100)
     language = models.CharField(max_length=2, choices=Language.choices)
     value = models.TextField()
