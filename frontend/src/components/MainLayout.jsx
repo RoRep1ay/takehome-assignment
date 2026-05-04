@@ -4,7 +4,6 @@ export const MainLayout = ({ children }) => {
   return <>
     <MenuBar />
 
-    <main>{children}</main>
-
+    <div>{children}</div>
   </>
 }

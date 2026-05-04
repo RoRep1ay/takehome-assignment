@@ -1,0 +1,37 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+body.login-page {
+  background-image: url('./assets/sverige43.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.app-container {
+  margin: 1rem;
+}
+
+@media (min-width: 769px) {
+  .app-container {
+    margin: 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .app-container {
+    margin: 2rem;
+  }
+}

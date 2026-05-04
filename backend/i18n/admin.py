@@ -4,4 +4,4 @@ from .models import Translation
 
 @admin.register(Translation)
 class TranslationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('key', 'language', 'value')

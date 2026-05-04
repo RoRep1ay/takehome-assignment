@@ -1,20 +1,21 @@
-from collections import defaultdict
-
 from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from ..models import Translation
+from ..models.translation import Language, Translation
 
 
 class TranslationViewSet(ViewSet):
 
     @extend_schema(exclude=True)
     def list(self, request):
-        translations = Translation.objects.all().values_list('language', 'key', 'value')
-        payload = defaultdict(dict)
+        requested_language = request.query_params.get('language', Language.ENGLISH)
+        language = requested_language.split('-')[0].lower()
 
-        for language, key, value in translations:
-            payload[language][key] = value
+        if language not in Language.values:
+            language = Language.ENGLISH
+
+        translations = Translation.objects.filter(language=language).values_list('key', 'value')
+        payload = {key: value for key, value in translations}
 
         return Response(payload)
