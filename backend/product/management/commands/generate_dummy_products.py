@@ -1,7 +1,10 @@
 from decimal import Decimal
+
 from faker import Faker
 from django.core.management.base import BaseCommand
+
 from product.models import Product
+
 
 class Command(BaseCommand):
 
@@ -17,18 +20,29 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         count = options['count']
         faker = Faker()
-        products = []
-        for _ in range(count):
+        created_count = 0
+
+        for index in range(1, count + 1):
             in_price = faker.pydecimal(left_digits=2, right_digits=2, positive=True)
-            products.append(
-                Product(
-                    name=faker.company(),
-                    in_price=in_price,
-                    price=(in_price * Decimal('1.5').quantize(Decimal('0.01'))),
-                    description=faker.text(max_nb_chars=200)
-                )
+            price = in_price * Decimal('1.50')
+
+            _, created = Product.objects.update_or_create(
+                article_no=str(1234567800 + index),
+                defaults={
+                    'name': faker.sentence(nb_words=4).replace('.', ''),
+                    'in_price': in_price,
+                    'price': price,
+                    'in_stock': faker.pydecimal(left_digits=2, right_digits=2, positive=True),
+                    'unit': faker.random_element(elements=('pcs', 'hours', 'kg', 'box')),
+                    'description': faker.text(max_nb_chars=200),
+                },
             )
 
-        Product.objects.bulk_create(products)
+            if created:
+                created_count += 1
         
-        self.stdout.write(self.style.SUCCESS(f'Successfully generated {count} dummy products'))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f'Successfully created or updated {count} dummy products ({created_count} created)'
+            )
+        )
