@@ -54,12 +54,12 @@ export const Login = () => {
 
   return (
     <div>
-      <div className="main">
-        <div className="box">
-          <div className="title">{t(`login`)}</div>
+      <div className="login">
+        <div className="login__card">
+          <div className="login__title">{t(`login`)}</div>
 
-          <form onSubmit={handleSubmit} className="form">
-            <div className="field">
+          <form onSubmit={handleSubmit} className="login__form">
+            <div className="login__field">
               <label htmlFor="email">{t(`enter_email_address`)}</label>
               <input
                 id="email"
@@ -73,10 +73,10 @@ export const Login = () => {
               />
             </div>
 
-            <div className="field">
+            <div className="login__field">
               <label htmlFor="password">{t(`enter_password`)}</label>
 
-              <div className="input-row">
+              <div className="login__input-row">
                 <input
                   id="password"
                   name="password"
@@ -90,45 +90,46 @@ export const Login = () => {
 
                 <button
                   type="button"
-                  className="eye"
+                  className="login__password-toggle"
                   onClick={() =>
                     setShowPassword((currentValue) => !currentValue)
                   }
                 >
                   <img
                     src={showPassword ? eyeOpenIcon : eyeCloseIcon}
-                    className="eye-icon"
+                    className="login__password-toggle-icon"
+                    alt=""
                   />
                 </button>
               </div>
             </div>
 
-            {errorMessage ? <p className="error">{errorMessage}</p> : null}
+            {errorMessage ? <p className="login__error">{errorMessage}</p> : null}
 
-            <div className="actions">
-              <button type="submit" disabled={isLoading} className="submit">
+            <div className="login__actions">
+              <button type="submit" disabled={isLoading} className="login__submit">
                 {isLoading ? t(`logging_in`) : t(`login`)}
               </button>
             </div>
 
-            <div className="links">
+            <div className="login__links">
               <a href="#">{t(`register`)}</a>
               <a href="#">{t(`forgotten_password`)}</a>
             </div>
           </form>
         </div>
 
-        <div className="footer">
-          <div className="brand">123 Fakturera</div>
+        <div className="login__footer">
+          <div className="login__brand">123 Fakturera</div>
 
-          <div className="bottom-links">
+          <div className="login__footer-links">
             <a href="#">{t(`home`)}</a>
             <a href="#">{t(`order`)}</a>
             <a href="#">{t(`contact_us`)}</a>
           </div>
 
-          <div className="line"></div>
-          <div className="copy">
+          <div className="login__footer-rule"></div>
+          <div className="login__copyright">
             &copy; Lattfaktura, CRO no. 638537, 2025. All rights reserved.
           </div>
         </div>

@@ -1,4 +1,4 @@
-.main {
+.login {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   padding: 7rem 1.25rem 1.25rem;
 }
 
-.box {
+.login__card {
   width: 100%;
   max-width: 42rem;
   margin: 0 auto;
@@ -15,7 +15,7 @@
   background: #ffffff;
 }
 
-.title {
+.login__title {
   margin-bottom: 2rem;
   text-align: center;
   font-size: 3rem;
@@ -23,22 +23,22 @@
   color: #ff1d12;
 }
 
-.form {
+.login__form {
   width: 100%;
 }
 
-.field {
+.login__field {
   margin-bottom: 1.4rem;
 }
 
-.field label {
+.login__field label {
   display: block;
   margin-bottom: 0.55rem;
   font-size: 1rem;
   color: #333333;
 }
 
-.field input {
+.login__field input {
   width: 100%;
   height: 3.6rem;
   padding: 0 1rem;
@@ -49,24 +49,24 @@
   color: #333333;
 }
 
-.field input::placeholder {
+.login__field input::placeholder {
   color: #8a8a8a;
 }
 
-.field input:focus {
+.login__field input:focus {
   outline: none;
   border-color: #9cc4ff;
 }
 
-.input-row {
+.login__input-row {
   position: relative;
 }
 
-.input-row input {
+.login__input-row input {
   padding-right: 3.5rem;
 }
 
-.eye {
+.login__password-toggle {
   position: absolute;
   top: 50%;
   right: 1rem;
@@ -79,33 +79,24 @@
   cursor: pointer;
 }
 
-.eye-shape {
-  position: relative;
-  display: block;
-  width: 1.2rem;
-  height: 0.8rem;
-  border: 2px solid #c9c9c9;
-  border-radius: 0.9rem 0.9rem 0.6rem 0.6rem;
-}
-
-.eye-icon {
+.login__password-toggle-icon {
   width: 20px;
   height: 20px;
 }
 
-.error {
+.login__error {
   margin: 0 0 1rem;
   color: #d11b1b;
   text-align: center;
 }
 
-.actions {
+.login__actions {
   display: flex;
   justify-content: center;
   margin-top: 1.8rem;
 }
 
-.submit {
+.login__submit {
   min-width: 17rem;
   height: 3.25rem;
   padding: 0 2rem;
@@ -118,90 +109,90 @@
   cursor: pointer;
 }
 
-.submit:disabled {
+.login__submit:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.links {
+.login__links {
   display: flex;
   justify-content: center;
   gap: 2.5rem;
   margin-top: 1.5rem;
 }
 
-.links a {
+.login__links a {
   color: #232323;
   text-decoration: none;
   font-size: 1rem;
 }
 
-.footer {
+.login__footer {
   width: 100%;
   margin-top: auto;
   padding: 0 1.25rem 1rem;
   color: #ffffff;
 }
 
-.brand {
+.login__brand {
   margin-bottom: 1rem;
   font-size: 2.1rem;
   font-weight: 400;
 }
 
-.bottom-links {
+.login__footer-links {
   display: flex;
   justify-content: flex-end;
   gap: 2rem;
   margin-bottom: 1rem;
 }
 
-.bottom-links a {
+.login__footer-links a {
   color: #ffffff;
   text-decoration: none;
 }
 
-.line {
+.login__footer-rule {
   height: 1px;
   background: rgba(255, 255, 255, 0.8);
 }
 
-.copy {
+.login__copyright {
   padding-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
-  .main {
+  .login {
     justify-content: space-between;
     padding-top: 6.5rem;
   }
 
-  .box {
+  .login__card {
     max-width: 100%;
     margin: auto 0;
     padding: 2rem 1.25rem 1.75rem;
     border-radius: 1.8rem;
   }
 
-  .title {
+  .login__title {
     font-size: 2.7rem;
   }
 
-  .submit {
+  .login__submit {
     min-width: 15rem;
   }
 
-  .links {
+  .login__links {
     gap: 1.5rem;
   }
 
-  .brand {
+  .login__brand {
     font-size: 1.6rem;
   }
 
-  .bottom-links {
+  .login__footer-links {
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 1.25rem;
@@ -209,7 +200,7 @@
 }
 
 @media (min-width: 769px) {
-  .main {
+  .login {
     align-items: center;
     justify-content: space-between;
     padding-left: 2.5rem;
@@ -217,27 +208,27 @@
     padding-bottom: 0.75rem;
   }
 
-  .box {
+  .login__card {
     max-width: 41.5rem;
     margin: auto 0;
     padding: 2.7rem 5rem 2.4rem;
   }
 
-  .footer {
+  .login__footer {
     margin-top: 0;
     padding-left: 0;
     padding-right: 0;
   }
 
-  .brand {
+  .login__brand {
     font-size: 1.95rem;
   }
 
-  .bottom-links {
+  .login__footer-links {
     margin-bottom: 0.8rem;
   }
 
-  .copy {
+  .login__copyright {
     padding-top: 0.8rem;
   }
 }

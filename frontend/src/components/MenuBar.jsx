@@ -1,30 +1,57 @@
-import { useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { useSWRConfig } from 'swr'
+import { useState, useRef, useEffect } from 'react'
 import './MenuBar.css'
 import diamond from '../assets/diamond.png'
 import hamburger from '../assets/hamburger.svg'
 import seFlag from '../assets/SE.png'
 import gbFlag from '../assets/GB.png'
 import { useTranslation } from 'react-i18next'
-import { GETME_ENDPOINT } from '../hooks/useGetMeApi'
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../utils/request'
-import { useAuth } from '../auth/AuthContext'
 
 export const MenuBar = () => {
   const [open, setOpen] = useState(false)
   const [languageOpen, setLanguageOpen] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
-  const { mutate } = useSWRConfig()
-  const { isAuthenticated, status } = useAuth()
-
   const { t, i18n } = useTranslation()
   const language = i18n.language || 'en'
-  const isLoginPage = location.pathname === '/login'
-  const isProductsPage = location.pathname === '/products'
-
   const currentFlag = language === 'sv' ? seFlag : gbFlag
+
+  const menuRef = useRef(null)
+  const languageMenuRef = useRef(null)
+
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (!languageOpen) {
+      return
+    }
+    const handleClickOutside = (event) => {
+      if (
+        languageMenuRef.current &&
+        !languageMenuRef.current.contains(event.target)
+      ) {
+        setLanguageOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [languageOpen])
 
   const handleLanguageChange = (nextLanguage) => {
     i18n.changeLanguage(nextLanguage)
@@ -36,151 +63,83 @@ export const MenuBar = () => {
     setLanguageOpen(false)
   }
 
-  const handleLogout = async () => {
-    localStorage.removeItem(ACCESS_TOKEN_KEY)
-    localStorage.removeItem(REFRESH_TOKEN_KEY)
-    await mutate(GETME_ENDPOINT, undefined, false)
-    handleMenuClose()
-    navigate('/login', { replace: true })
-  }
-
-  if (status === 'checking' && !isLoginPage && !isProductsPage) {
-    return <div>Loading...</div>
-  }
-
   return (
-    <div
-      className={
-        isLoginPage
-          ? 'navigation light'
-          : isProductsPage
-            ? 'navigation blue'
-            : 'navigation'
-      }
-    >
-      <div className="navigation-item" id="menu-container">
-        {isProductsPage ? null : (
-          <div className="img-brand-div">
-            <img className="img-brand" src={diamond} />
-          </div>
-        )}
+    <div className="menu-bar__navigation">
+      <div className="menu-bar__navigation-menu" ref={menuRef}>
+        <div className="menu-bar__image-container">
+          <img className="menu-bar__image" src={diamond} alt="" />
+        </div>
 
-        {isProductsPage ? null : (
-          <button
-            type="button"
-            id="hamburger-button"
-            onClick={() => setOpen((currentOpen) => !currentOpen)}
-            aria-label="Open menu"
-          >
-            <img src={hamburger} id="hamburger" />
-          </button>
-        )}
-
-        {isProductsPage ? null : (
-          <ul className={`menu-items ${open ? 'menu-items-open' : ''}`}>
-            {isLoginPage ? (
-              <>
-                <li className="menu-item">
-                  <a href="#" onClick={handleMenuClose}>
-                    {t(`home`)}
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a href="#" onClick={handleMenuClose}>
-                    {t(`order`)}
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a href="#" onClick={handleMenuClose}>
-                    {t(`our_customers`)}
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a href="#" onClick={handleMenuClose}>
-                    {t(`about_us`)}
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a href="#" onClick={handleMenuClose}>
-                    {t(`contact_us`)}
-                  </a>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="menu-item">
-                  <NavLink to="/" onClick={handleMenuClose}>
-                    {t(`home`)}
-                  </NavLink>
-                </li>
-                <li className="menu-item">
-                  <NavLink to="/products" onClick={handleMenuClose}>
-                    {t(`products`)}
-                  </NavLink>
-                </li>
-                <li className="menu-item">
-                  <NavLink to="/about" onClick={handleMenuClose}>
-                    {t(`about_us`)}
-                  </NavLink>
-                </li>
-                {!isAuthenticated ? (
-                  <li className="menu-item">
-                    <NavLink to="/login" onClick={handleMenuClose}>
-                      {t(`login`)}
-                    </NavLink>
-                  </li>
-                ) : (
-                  <li className="menu-item">
-                    <button
-                      type="button"
-                      className="menu-button"
-                      onClick={handleLogout}
-                    >
-                      {t(`logout`)}
-                    </button>
-                  </li>
-                )}
-              </>
-            )}
-          </ul>
-        )}
-      </div>
-
-      <div className="navigation-item" id="flag-container">
         <button
           type="button"
-          id="language-button"
+          className="menu-bar__toggle"
+          onClick={() => setOpen((currentOpen) => !currentOpen)}
+        >
+          <img src={hamburger} className="menu-bar__toggle-icon" alt="" />
+        </button>
+
+        <ul className={`menu-bar__list ${open ? 'menu-bar__list--open' : ''}`}>
+          <li className="menu-bar__item">
+            <a href="#" onClick={handleMenuClose}>
+              {t(`home`)}
+            </a>
+          </li>
+          <li className="menu-bar__item">
+            <a href="#" onClick={handleMenuClose}>
+              {t(`order`)}
+            </a>
+          </li>
+          <li className="menu-bar__item">
+            <a href="#" onClick={handleMenuClose}>
+              {t(`our_customers`)}
+            </a>
+          </li>
+          <li className="menu-bar__item">
+            <a href="#" onClick={handleMenuClose}>
+              {t(`about_us`)}
+            </a>
+          </li>
+          <li className="menu-bar__item">
+            <a href="#" onClick={handleMenuClose}>
+              {t(`contact_us`)}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div className="menu-bar__language-wrap" ref={languageMenuRef}>
+        <button
+          type="button"
+          className="menu-bar__language-button"
           onClick={() => setLanguageOpen((currentOpen) => !currentOpen)}
           aria-haspopup="true"
           aria-expanded={languageOpen}
         >
           <span>{language === 'sv' ? 'Svenska' : 'English'}</span>
           <img
-            className="language-flag"
+            className="menu-bar__flag"
             src={currentFlag}
             alt={language === 'sv' ? 'Swedish flag' : 'British flag'}
           />
-          <span className="language-caret">&#9662;</span>
         </button>
 
         {languageOpen ? (
-          <div className="language-menu">
+          <div className="menu-bar__language-menu">
             <button
               type="button"
-              className="language-option"
+              className="menu-bar__language-option"
               onClick={() => handleLanguageChange('sv')}
             >
               <span>Svenska</span>
-              <img className="language-flag" src={seFlag} alt="Swedish flag" />
+              <img className="menu-bar__flag" src={seFlag} alt="Swedish flag" />
             </button>
-            <hr className="m-0" />
             <button
               type="button"
-              className="language-option"
+              className="menu-bar__language-option"
               onClick={() => handleLanguageChange('en')}
             >
               <span>English</span>
-              <img className="language-flag" src={gbFlag} alt="British flag" />
+              <img className="menu-bar__flag" src={gbFlag} alt="British flag" />
             </button>
           </div>
         ) : null}
