@@ -66,7 +66,6 @@ export const ProductsMenuBar = () => {
           type="button"
           className="products-menu__toggle"
           onClick={() => setOpen((currentOpen) => !currentOpen)}
-          aria-label="Open products menu"
         >
           <img src={hamburger} className="products-menu__toggle-icon" alt="" />
         </button>

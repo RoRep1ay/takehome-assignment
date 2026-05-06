@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useProductsApi } from '../hooks/useProductsApi'
 import { useUpdateProductApi } from '../hooks/useUpdateProductApi'
 import { useTranslation } from 'react-i18next'
@@ -10,20 +10,18 @@ import rightArrowIcon from '../assets/right-arrow-icon.svg'
 import moreIcon from '../assets/more-icon.svg'
 import { productsMenuItems } from '../utils/productsMenuItems'
 import './Products.css'
+import { useLogout } from '../hooks/useLogout'
 
-const SearchField = ({ value, onChange, placeholder }) => {
+const SearchField = ({ placeholder }) => {
   return (
     <div className="products__search-field">
       <input
-        value={value}
-        onChange={onChange}
         placeholder={placeholder}
         className="products__search-input"
       />
       <button
         type="button"
         className="products__search-button"
-        aria-label="Search"
       >
         <img
           src={searchIcon}
@@ -195,10 +193,10 @@ export const Products = () => {
   const { data, isLoading, error } = useProductsApi()
   const { t } = useTranslation()
   const [products, setProducts] = useState([])
-  const [articleText, setArticleText] = useState('')
-  const [nameText, setNameText] = useState('')
   const [saveErrors, setSaveErrors] = useState({})
   const [activeId, setActiveId] = useState(null)
+
+  const logout = useLogout()
 
   useEffect(() => {
     document.body.classList.add('products-page')
@@ -217,19 +215,6 @@ export const Products = () => {
       }
     }
   }, [data])
-
-  const shownProducts = useMemo(() => {
-    return products.filter((item) => {
-      const articleMatch =
-        !articleText ||
-        (item.article_no || '')
-          .toLowerCase()
-          .includes(articleText.toLowerCase())
-      const nameMatch =
-        !nameText || item.name.toLowerCase().includes(nameText.toLowerCase())
-      return articleMatch && nameMatch
-    })
-  }, [products, articleText, nameText])
 
   const handleChange = (id, field, value) => {
     setProducts((currentProducts) => {
@@ -282,7 +267,7 @@ export const Products = () => {
   }
 
   return (
-    <section className="products">
+    <div className="products">
       <div className="products__sidebar">
         <div className="products__sidebar-title">Menu</div>
         <div className="products__sidebar-rule"></div>
@@ -296,6 +281,19 @@ export const Products = () => {
             ]
               .filter(Boolean)
               .join(' ')
+
+            if (item.label === 'Log out') {
+              return (
+                <li
+                  key={item.label}
+                  className={sidebarItemClassName}
+                  onClick={logout}
+                >
+                  <span className="products__sidebar-dot"></span>
+                  <span>{item.label}</span>
+                </li>
+              )
+            }
 
             return (
               <li key={item.label} className={sidebarItemClassName}>
@@ -311,14 +309,10 @@ export const Products = () => {
         <div className="products__toolbar">
           <div className="products__search">
             <SearchField
-              value={articleText}
-              onChange={(event) => setArticleText(event.target.value)}
               placeholder={t(`search_article_no`)}
             />
 
             <SearchField
-              value={nameText}
-              onChange={(event) => setNameText(event.target.value)}
               placeholder={t(`search_product`)}
             />
           </div>
@@ -354,7 +348,7 @@ export const Products = () => {
         </div>
 
         <div className="products__list">
-          {shownProducts.map((item) => {
+          {products.map((item) => {
             return (
               <ProductRow
                 key={item.id}
@@ -370,6 +364,6 @@ export const Products = () => {
           })}
         </div>
       </div>
-    </section>
+    </div>
   )
 }

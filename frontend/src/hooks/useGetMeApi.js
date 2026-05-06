@@ -9,9 +9,9 @@ const getMeRequest = async (key) => {
 
 export const useGetMeApi = () => {
   const { data, error, isLoading } = useSWR(GETME_ENDPOINT, getMeRequest, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    shouldRetryOnError: false,
+    // revalidateOnFocus: false,
+    // revalidateOnReconnect: false,
+    // shouldRetryOnError: false,
   })
 
   return {
