@@ -1,3 +1,9 @@
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -20,6 +26,14 @@ body.login-page {
   background-attachment: fixed;
 }
 
+body.login-page .app-container {
+  margin: 0;
+}
+
+body.products-page .app-container {
+  margin: 0;
+}
+
 .app-container {
   margin: 1rem;
 }
@@ -30,7 +44,7 @@ body.login-page {
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1280px) {
   .app-container {
     margin: 2rem;
   }

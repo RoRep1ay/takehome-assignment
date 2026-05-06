@@ -1,9 +1,16 @@
-import { MenuBar } from "./MenuBar"
+import { useLocation } from 'react-router-dom'
+import { MenuBar } from './MenuBar'
+import { ProductsMenuBar } from './ProductsMenuBar'
 
 export const MainLayout = ({ children }) => {
-  return <>
-    <MenuBar />
+  const location = useLocation()
+  const isProductsPage = location.pathname === '/products'
 
-    <div>{children}</div>
-  </>
+  return (
+    <>
+      {isProductsPage ? <ProductsMenuBar /> : <MenuBar />}
+
+      <div>{children}</div>
+    </>
+  )
 }

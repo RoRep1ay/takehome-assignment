@@ -1,24 +1,20 @@
-import { useGetMeApi } from "./useGetMeApi"
+import { useGetMeApi } from './useGetMeApi'
 
 export const useAuthenticated = () => {
-  const {
-    isLoading,
-    error,
-  } = useGetMeApi()
+  const { isLoading, error } = useGetMeApi()
   if (isLoading) {
     return {
-      status: 'checking'
+      status: 'checking',
     }
   }
 
   if (error) {
     return {
-      status: 'unauthenticated'
+      status: 'unauthenticated',
     }
   }
 
   return {
-    status: 'authenticated'
+    status: 'authenticated',
   }
-
 }

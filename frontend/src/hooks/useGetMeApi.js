@@ -1,5 +1,5 @@
-import useSWR from "swr"
-import { fetchRequest } from "../utils/request"
+import useSWR from 'swr'
+import { fetchRequest } from '../utils/request'
 
 export const GETME_ENDPOINT = '/api/auth/me/'
 
@@ -8,12 +8,15 @@ const getMeRequest = async (key) => {
 }
 
 export const useGetMeApi = () => {
-  const { data, error, isLoading } = useSWR(GETME_ENDPOINT, getMeRequest, {})
+  const { data, error, isLoading } = useSWR(GETME_ENDPOINT, getMeRequest, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    shouldRetryOnError: false,
+  })
 
   return {
     data,
     error,
     isLoading,
-    
   }
 }

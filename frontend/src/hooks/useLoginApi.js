@@ -15,7 +15,7 @@ const loginRequest = async (key, { arg }) => {
 export const useLoginApi = () => {
   const { trigger, isMutating, error, data } = useSWRMutation(
     LOGIN_ENDPOINT,
-    loginRequest,
+    loginRequest
   )
 
   const login = async (credentials) => {
