@@ -10,7 +10,7 @@ const updateProductRequest = (key, { arg }) => {
 }
 
 export const useUpdateProductApi = (id) => {
-  const ENDPOINT = `/api/products/${id}/`
+  const ENDPOINT = `/products/${id}/`
   const { data, trigger, isMutating, error } = useSWRMutation(
     ENDPOINT,
     updateProductRequest

@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import { fetchRequest } from '../utils/request'
 
-export const GETME_ENDPOINT = '/api/auth/me/'
+export const GETME_ENDPOINT = '/auth/me/'
 
 const getMeRequest = async (key) => {
   return fetchRequest(key, { method: 'GET', auth: true })

@@ -8,7 +8,7 @@ export const useLogout = () => {
   const handleLogout = () => {
     localStorage.removeItem(ACCESS_TOKEN_KEY)
     localStorage.removeItem(REFRESH_TOKEN_KEY)
-    mutate('/api/auth/me/', undefined, false) // Clear the SWR cache for the user data
+    mutate('/auth/me/', undefined, false) // Clear the SWR cache for the user data
     navigate('/login')
   }
 

@@ -9,7 +9,7 @@ const signUpRequest = (key, { arg }) => {
 }
 
 export const useSignUpApi = () => {
-  const SIGNUP_ENDPOINT = '/api/auth/signup/'
+  const SIGNUP_ENDPOINT = '/auth/signup/'
 
   const { data, trigger, isMutating, error } = useSWRMutation(
     SIGNUP_ENDPOINT,

@@ -1,7 +1,7 @@
 import useSWRMutation from 'swr/mutation'
 import { fetchRequest } from '../utils/request'
 
-const LOGIN_ENDPOINT = `/api/auth/login/`
+const LOGIN_ENDPOINT = `/auth/login/`
 const ACCESS_TOKEN_KEY = 'accessToken'
 const REFRESH_TOKEN_KEY = 'refreshToken'
 

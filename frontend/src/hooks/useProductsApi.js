@@ -9,7 +9,7 @@ const getProductsRequest = (key) => {
 }
 
 export const useProductsApi = () => {
-  const PRODUCTS_ENDPOINT = '/api/products/'
+  const PRODUCTS_ENDPOINT = '/products/'
   const { data, error, isLoading } = useSWR(
     PRODUCTS_ENDPOINT,
     getProductsRequest
