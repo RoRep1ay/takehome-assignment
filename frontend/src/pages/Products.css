@@ -354,7 +354,7 @@
   }
 }
 
-@media (min-width: 769px) and (max-width: 1279px) and (orientation: landscape) {
+@media (max-width: 900px) and (orientation: landscape) {
   .products {
     min-height: calc(100vh - 4.5rem);
     padding: 1rem 1.2rem 1.3rem;

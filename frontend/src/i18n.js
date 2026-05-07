@@ -26,7 +26,7 @@ i18n
       loadPath: `${apiBaseUrl}/translation/?language={{lng}}`,
     },
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
     defaultNS: 'translation',
     ns: ['translation'],
 

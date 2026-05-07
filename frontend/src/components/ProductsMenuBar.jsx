@@ -3,9 +3,12 @@ import { useTranslation } from 'react-i18next'
 import hamburger from '../assets/hamburger.svg'
 import seFlag from '../assets/SE.png'
 import gbFlag from '../assets/GB.png'
+import userIcon from '../assets/user-icon.svg'
 import { productsMenuItems } from '../utils/productsMenuItems'
 import './ProductsMenuBar.css'
 import { useEffect, useRef } from 'react'
+import { useGetMeApi } from '../hooks/useGetMeApi'
+import { useLogout } from '../hooks/useLogout'
 
 export const ProductsMenuBar = () => {
   const [open, setOpen] = useState(false)
@@ -13,6 +16,8 @@ export const ProductsMenuBar = () => {
   const { i18n } = useTranslation()
   const language = i18n.language || 'en'
   const currentFlag = language === 'sv' ? seFlag : gbFlag
+  const { data, isLoading } = useGetMeApi()
+  const logout = useLogout()
 
   const menuRef = useRef(null)
   const languageMenuRef = useRef(null)
@@ -59,6 +64,10 @@ export const ProductsMenuBar = () => {
     setLanguageOpen(false)
   }
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className="products-menu">
       <div className="products-menu__section" ref={menuRef}>
@@ -82,6 +91,15 @@ export const ProductsMenuBar = () => {
               .filter(Boolean)
               .join(' ')
 
+            if (item.label === 'Log out') {
+              return (
+                <li key={item.label} className={itemClassName} onClick={logout}>
+                  <span className="products-menu__dot"></span>
+                  <span>{item.label}</span>
+                </li>
+              )
+            }
+
             return (
               <li key={item.label} className={itemClassName}>
                 <span className="products-menu__dot"></span>
@@ -90,6 +108,16 @@ export const ProductsMenuBar = () => {
             )
           })}
         </ul>
+
+        <div className="products-menu__profile-container">
+          <div className="products-menu__image-div">
+            <img src={userIcon} className="products-menu__user-icon"  />
+          </div>
+          <div>
+            <div className="products-menu__user-name">{data?.username}</div>
+            <div className="products-menu__user-email">{data?.email}</div>
+          </div>
+        </div>
       </div>
 
       <div

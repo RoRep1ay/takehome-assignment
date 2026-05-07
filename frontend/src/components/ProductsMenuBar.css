@@ -149,10 +149,45 @@
   background: #e8f3ff;
 }
 
+.products-menu__profile-container {
+  display: none;
+}
+
+.products-menu__user-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.products-menu__user-name {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.products-menu__user-email {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.products-menu__image-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 @media (min-width: 1280px) {
   .products-menu__toggle,
   .products-menu__list,
   .products-menu__list--open {
     display: none;
+  }
+
+  .products-menu__profile-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+
+  .products-menu {
+    padding: 1rem 3.5rem;
   }
 }
